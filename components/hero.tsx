@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import NavItems from "./nav-items";
 import { BackgroundGradientAnimation } from "./ui/bg-gradient";
 import Image from "next/image";
@@ -9,9 +10,15 @@ import { MovingBorder } from "./ui/moving-border";
 import { HeroImage } from "./hero-image";
 
 function Hero() {
+  const [trigger, setTrigger] = useState(false);
   return (
     <div className="max-w-screen p-10 min-h-screen flex flex-col justify-center items-center ">
-      <CardContainer className="w-full max-w-6xl min-h-[30rem] lg:h-[30rem]  relative cursor-pointer ">
+      <CardContainer
+        onMouseEnter={() => setTrigger((t) => !t)}
+        onMouseLeave={() => setTrigger((t) => !t)}
+        // onMouseMove={() => setTrigger((t) => !t)}
+        className="w-full max-w-6xl min-h-[30rem] lg:h-[30rem]  relative cursor-pointer "
+      >
         <div className="absolute h-full rounded-lg  w-full overflow-hidden inset-0">
           <MovingBorder duration={8000} rx="0%" ry="0">
             <div
@@ -33,7 +40,7 @@ function Hero() {
             <h3 className="hidden md:block">{"<SKS/>"}</h3>
             <CardItem translateZ="20" className="hidden md:block">
               <h3 className="text-2xl  group-hover:text-red-600 md:text-4xl font-bold mt-3 opacity-70">
-                Nerd,
+                SDE portfolio,
               </h3>
               <h3 className="text-2xl md:text-4xl font-bold opacity-70">
                 that no one asked for
@@ -53,7 +60,7 @@ function Hero() {
             translateZ="40"
             className="md:h-[110%]  w-full md:w-auto mb-[2px] flex flex-col justify-center  md:justify-end"
           >
-            <HeroImage className="h-full w-1/2 " />
+            <HeroImage trigger={trigger} className="h-full w-1/2 " />
             {/* <HeroImage className="h-full max-h-[50vh] md:max-h-none w-full md:w-auto object-scale-down" /> */}
 
             <hr className="md:hidden border-red-600" />

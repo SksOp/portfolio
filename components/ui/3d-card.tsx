@@ -18,16 +18,23 @@ export const CardContainer = ({
   children,
   className,
   containerClassName,
+  onMouseEnter,
+  onMouseLeave,
+  onMouseMove,
 }: {
   children?: React.ReactNode;
   className?: string;
   containerClassName?: string;
+  onMouseEnter?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onMouseLeave?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onMouseMove?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
+    if (onMouseMove) onMouseMove(e);
     const { left, top, width, height } =
       containerRef.current.getBoundingClientRect();
     const x = (e.clientX - left - width / 2) / 25;
@@ -37,12 +44,14 @@ export const CardContainer = ({
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsMouseEntered(true);
+    if (onMouseEnter) onMouseEnter(e);
     if (!containerRef.current) return;
   };
 
   const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     setIsMouseEntered(false);
+    if (onMouseLeave) onMouseLeave(e);
     containerRef.current.style.transform = `rotateY(0deg) rotateX(0deg)`;
   };
   return (
