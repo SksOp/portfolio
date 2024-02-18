@@ -6,6 +6,7 @@ import { jeju } from "@/lib/local-font-load";
 import { cn } from "@/lib/utils";
 import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
 import { MovingBorder } from "./ui/moving-border";
+import { HeroImage } from "./hero-image";
 
 function Hero() {
   return (
@@ -24,11 +25,14 @@ function Hero() {
         <CardBody className="relative group/card flex flex-col-reverse md:items-end md:flex-row  max-h-max  z-10 w-full h-full">
           <CardItem
             translateZ="20"
-            className={cn(jeju.className, "flex-grow flex flex-col p-6 h-full")}
+            className={cn(
+              jeju.className,
+              "flex-grow flex flex-col gap-4 p-6 h-full"
+            )}
           >
             <h3 className="hidden md:block">{"<SKS/>"}</h3>
             <CardItem translateZ="20" className="hidden md:block">
-              <h3 className="text-2xl  group-hover:text-red-600 md:text-4xl font-bold mt-6 opacity-70">
+              <h3 className="text-2xl  group-hover:text-red-600 md:text-4xl font-bold mt-3 opacity-70">
                 Nerd,
               </h3>
               <h3 className="text-2xl md:text-4xl font-bold opacity-70">
@@ -47,15 +51,11 @@ function Hero() {
           </CardItem>
           <CardItem
             translateZ="40"
-            className="md:h-[110%]  w-full md:w-auto mb-[2px]"
+            className="md:h-[110%]  w-full md:w-auto mb-[2px] flex flex-col justify-center  md:justify-end"
           >
-            <Image
-              src="/assets/hero_image.png"
-              width={2000}
-              height={2000}
-              alt="Hero"
-              className="h-full max-h-[50vh] md:max-h-none w-full md:w-auto object-scale-down"
-            />
+            <HeroImage className="h-full w-1/2 " />
+            {/* <HeroImage className="h-full max-h-[50vh] md:max-h-none w-full md:w-auto object-scale-down" /> */}
+
             <hr className="md:hidden border-red-600" />
           </CardItem>
           <h3 className="md:hidden p-6">{"<SKS/>"}</h3>
