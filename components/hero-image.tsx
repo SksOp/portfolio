@@ -1,15 +1,10 @@
 "use client";
 import { cn } from "@/lib/utils";
-import { Stage, withFilters, Sprite, useTick } from "@pixi/react";
+import { Stage, withFilters, Sprite, Container } from "@pixi/react";
 import { ClassValue } from "clsx";
-import Image from "next/image";
-import React, { forwardRef, useEffect, useRef, useState } from "react";
-import { Container } from "@pixi/react";
-import * as PIXI from "pixi.js";
-import { AdjustmentFilter } from "@pixi/filter-adjustment";
-import { DisplacementFilter } from "@pixi/filter-displacement";
-import { animate, easeInOut, motion, motionValue } from "framer-motion";
-import * as dat from "dat.gui";
+import React, { useEffect, useRef, useState } from "react";
+import { DisplacementFilter, Point, Sprite as Sp, WRAP_MODES } from "pixi.js";
+import { animate, easeInOut } from "framer-motion";
 
 const Filters = withFilters(Container, {
   displacement: DisplacementFilter,
@@ -29,16 +24,15 @@ const HeroImageRender = ({
   width: number;
   height: number;
 }) => {
-  const displacementSpriteRef = useRef<PIXI.Sprite>();
+  const displacementSpriteRef = useRef<Sp>();
   const [renderFilter, setRenderFilter] = React.useState(false);
 
   React.useEffect(() => {
     if (!displacementSpriteRef.current) return;
     displacementSpriteRef.current.texture.baseTexture.wrapMode =
-      PIXI.WRAP_MODES.REPEAT;
+      WRAP_MODES.REPEAT;
     setRenderFilter(true);
   }, []);
-  // console.log({ ...config, width, height }, renderFilter);
   return (
     <>
       <Sprite
@@ -62,7 +56,7 @@ const HeroImageRender = ({
             image="/assets/hero_image.png"
             width={width}
             height={height}
-            position={new PIXI.Point(0, 0)}
+            position={new Point(0, 0)}
           />
         </Filters>
       )}
@@ -107,31 +101,6 @@ export const HeroImage = ({
     });
   }, [trigger]);
 
-  // useEffect(() => {
-  //   const g = new dat.GUI();
-  //   const displacement = g.addFolder("Displacement");
-  //   displacement.open();
-  //   displacement
-  //     .add(config.displacement, "x", 0, 1000)
-  //     .onChange((value: number) =>
-  //       setDisplacement((config: { x: number; y: number }) => ({
-  //         ...config,
-  //         x: value,
-  //       }))
-  //     );
-  //   displacement
-  //     .add(config.displacement, "y", 0, 1000)
-  //     .onChange((value: number) =>
-  //       setDisplacement((config: { x: number; y: number }) => ({
-  //         ...config,
-  //         y: value,
-  //       }))
-  //     );
-  //   return () => {
-  //     g.destroy();
-  //   };
-  // }, []);
-
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > sizeInitial.width) {
@@ -147,6 +116,7 @@ export const HeroImage = ({
     handleResize();
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
   useEffect(() => {
     // change the toggleAction from none to auto from css using js
     const canvas = document.querySelector(".canvas-hero");
